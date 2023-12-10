@@ -20,6 +20,7 @@ function createDefaultGrid() {
 
             if (c === bombCol) {
                 cell.classList.add("bomb");
+				cell.setAttribute("data", 0);
             } else {
                 cell.classList.add("valid");
             }
