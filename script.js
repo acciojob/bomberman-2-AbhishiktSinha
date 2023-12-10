@@ -1,6 +1,7 @@
 const gridContainer = document.querySelector(".grid-container");
 let checked = 0;
 let flagged = 0;
+let bombsFlagged = 0;
 
 updateDisplayFlagCount();
 createDefaultGrid();
@@ -119,7 +120,7 @@ function cellClickEventHandler(event) {
             gridContainer.removeEventListener("contextmenu", rightClickHandler);
 
             displayAll();
-            document.getElementById("result").textContent = "YOU LOSE";
+            document.getElementById("result").textContent = "YOU LOSE!";
         }
     }
 }
@@ -138,10 +139,15 @@ function rightClickHandler(event) {
             cell.textContent = '';
             flagged--;
         }
-        else if (flagged < 10){
+        else if (flagged < 10) {
             cell.textContent = "🚩";
             cell.classList.add("flag");
             flagged++;
+
+            if (cell.classList.contains("bomb")) {
+                bombsFlagged++;
+                checkVictory();
+            }
         }
 
         updateDisplayFlagCount();
@@ -157,7 +163,12 @@ function getScore() {
 function checkVictory() {
     if (checked === 90) {
         displayAll();
-        document.getElementById("result").textContent = "YOU WON";
+        document.getElementById("result").textContent = "YOU WIN!";
+    }
+    if (bombsFlagged == 10) {
+
+        displayAll();
+        document.getElementById("result").textContent = "YOU WIN!";
     }
 }
 
